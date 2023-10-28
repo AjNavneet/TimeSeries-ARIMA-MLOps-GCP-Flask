@@ -27,7 +27,7 @@ The dataset is "Call centers" data. This data is at the month level wherein the 
 
 - To build an ARIMA model on the given dataset.
 
-- To create an end-to-end machine learning development process to design, build, and manage reproducible, testable, and evolvable machine learning models using Google Cloud Platform (GCP) for the Time Series ARIMA Project.
+- To create an end-to-end machine learning development process to design, build, and manage reproducible, testable, and evolvable machine learning models using Google Cloud Platform (GCP).
 
 ---
 
