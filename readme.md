@@ -1,164 +1,144 @@
-# Time Series ARIMA Model with MLOps on GCP using uWSGI Flask
+# Time Series ARIMA Model with MLOps on Google Cloud Platform (GCP) using uWSGI Flask
 
 ## Business Objective
 
-A time series is simply a series of data points ordered in time. In a time-series, time is often the independent variable, and the goal is usually to make a forecast for the future. Time series data can be helpful for many applications in day-to-day activities like:
+A time series is a series of data points ordered in time, where time is often the independent variable. Time series data is valuable for various applications, such as:
 
-- Tracking daily, hourly, or weekly weather data
-- Monitoring changes in application performance
-- Medical devices to visualize vitals in real-time
+- Tracking weather data at different intervals
+- Monitoring application performance changes
+- Visualizing real-time vital statistics in medical devices
 
-Auto-Regressive Integrated Moving Average (ARIMA) model is one of the more popular and widely used statistical methods for time-series forecasting. ARIMA is an acronym that stands for Auto-Regressive Integrated Moving Average. It is a class of statistical algorithms that captures the standard temporal dependencies unique to time-series data. The model is used to understand past data or predict future data in a series. It's used when a metric is recorded in regular intervals, from fractions of a second to daily, weekly, or monthly periods.
+The Auto-Regressive Integrated Moving Average (ARIMA) model is a widely used statistical method for time-series forecasting. ARIMA stands for Auto-Regressive Integrated Moving Average and is used to analyze and predict time-series data. It is suitable for metrics recorded at regular intervals, from fractions of a second to daily, weekly, or monthly periods. ARIMAX and SARIMAX are extensions of the ARIMA model.
 
-ARIMAX (Auto-Regressive Integrated Moving Average Exogenous) is an extension of the ARIMA model, and similarly, SARIMAX (Seasonal Auto-Regressive Integrated Moving Average with Exogenous factors) is also an updated version of the ARIMA model.
-
-MLOps is a set of practices that aims to deploy and maintain machine learning models in production reliably and efficiently. Today, many organizations are turning towards machine learning and Artificial intelligence. AI-based applications promise to deliver new levels of competitiveness, intelligence, and automation for businesses. MLOps is a means of continuous delivery and deployment of these machine learning models. Practicing MLOps means that you advocate for automation and monitoring at all steps of ML system construction, including integration, testing, releasing, deployment, and infrastructure management.
+MLOps is a set of practices that ensure reliable and efficient deployment and maintenance of machine learning models in production. Many organizations are adopting machine learning and artificial intelligence to gain a competitive edge, automate processes, and make data-driven decisions. MLOps advocates for automation and monitoring at all stages of machine learning system development, including integration, testing, releasing, deployment, and infrastructure management.
 
 ---
 
 ## Data Description
 
-The dataset is "Call centers" data. This data is at the month level wherein the calls are segregated at the domain level as the call center operates for various domains. There are also external regressors like the number of channels and the number of phone lines which essentially indicate the traffic prediction of the in-house analyst and the resources available. The total number of rows are 132 and the number of columns are 8:
-- Month, healthcare, telecom, banking, technology, insurance, number of phonelines, and number of channels.
+The dataset contains "Call centers" data, recorded at the monthly level. The dataset categorizes calls by domain as the call center operates for various domains. It also includes external regressors like the number of phone lines and channels, which indicate traffic prediction and resource availability. The dataset has 132 rows and 8 columns:
+
+- Month, healthcare, telecom, banking, technology, insurance, number of phone lines, and number of channels.
 
 ---
 
 ## Aim
 
-- To build an ARIMA model on the given dataset.
-
-- To create an end-to-end machine learning development process to design, build, and manage reproducible, testable, and evolvable machine learning models using Google Cloud Platform (GCP).
+- Build an ARIMA model using the provided dataset.
+- Create an end-to-end machine learning development process on Google Cloud Platform (GCP) to design, build, and manage reproducible, testable, and evolvable machine learning models.
 
 ---
 
 ## Tech Stack
 
-- **Language**: `Python`
-- **Services**: `pandas`, `numpy`, `matplotlib`, `seaborn`, `statsmodels`, `scipy` , `GCP`, `uWSGI`, `Flask`, `Kubernetes`, `Docker`
+- **Language**: Python
+- **Libraries**: pandas, numpy, matplotlib, seaborn, statsmodels, scipy
+- **Cloud Services**: Google Cloud Platform (GCP)
+- **Web Technologies**: uWSGI, Flask
+- **Containerization**: Docker
+- **Container Orchestration**: Kubernetes
 
 ---
 
 ## Approach
 
-1. Import the required libraries and read the dataset
-2. Perform descriptive analysis
-3. Exploratory Data Analysis (EDA)
-    - Data Visualization
-4. Check for white noise
-5. Check for Random Walk
-6. Perform Stationarity tests
-    - Augmented Dickey-Fuller test
-    - KPSS test
-7. Seasonal decomposition plot
-8. Holt Winter Exponential Smoothing
-    - Create and fit the model
-    - Make predictions on the model
-    - Plot the results
-9. ARIMA model
-    - Create models with varying lag values
-    - Compare these models using log-likelihood and AIC values
-    - Check with the LLR test
-    - ACF Plots of residuals
-10. ARIMAX model
-    - Create a model
-    - ACF plots of residuals
-11. SARIMAX model
-    - Create a model
-    - ACF plots of residuals
+1. Import the necessary libraries and load the dataset.
+2. Perform descriptive analysis.
+3. Explore the data through Exploratory Data Analysis (EDA) and data visualization.
+4. Check for white noise and random walk in the time series.
+5. Conduct stationarity tests, including Augmented Dickey-Fuller and KPSS tests.
+6. Create a seasonal decomposition plot.
+7. Apply Holt Winter Exponential Smoothing.
+8. Develop an ARIMA model:
+    - Experiment with different lag values.
+    - Compare models using log-likelihood and AIC values.
+    - Conduct the LLR test.
+    - Analyze ACF plots of residuals.
+9. Implement an ARIMAX model.
+    - Analyze ACF plots of residuals.
+10. Explore SARIMAX modeling.
+    - Analyze ACF plots of residuals.
 
-#### CLOUD BUILD TRIGGER
+### Cloud Build Trigger
 
-- In your GCP console, create a new cloud build trigger.
-- Point the trigger to your source repository.
+- Create a new Cloud Build trigger in the GCP console.
+- Link the trigger to your source repository.
 
-#### GOOGLE KUBERNETES ENGINE (GKE)
+### Google Kubernetes Engine (GKE)
 
-- From the console launch a Kubernetes cluster.
+- Launch a Kubernetes cluster from the console.
 - Connect to the cluster and create the following two files:
   - `deployment.yaml`
   - `service.yaml`
-- Copy the code for both files from the "Kubernetes Files" folder in the cloned repository.
+- Copy the code from the "Kubernetes Files" folder in the cloned repository.
 - Execute the following commands:
   - `kubectl apply -f deployment.yaml`
   - `kubectl apply -f service.yaml`
-- Get the name of the deployment with the following command:
-  - `kubectl get deployments`
+- Obtain the deployment name with the command: `kubectl get deployments`
 
-#### CLOUD PUB/SUB
+### Cloud Pub/Sub
 
-- Create a Pub/Sub topic with the name `cloud-build`.
-- Provide a subscription for the topic, which is to trigger a cloud function.
+- Create a Pub/Sub topic named `cloud-build`.
+- Set up a subscription to trigger a cloud function.
 
-#### CLOUD FUNCTIONS
+### Cloud Functions
 
-- From Pub/Sub console launch the cloud function window.
-- Provide the following Environment variables through the GUI console:
-  - `PROJECT` (project name)
-  - `ZONE` (Region in which the project is deployed, ex. uscentral-1)
-  - `CLUSTER` (Name of the Kubernetes cluster created earlier)
-  - `DEPLOYMENT` (Name of the deployment inside the Kubernetes cluster)
-- Copy the program code and `requirements.txt` files for the cloud function from the `cloud-function-trigger` folder.
-- Configure the Entrypoint for the cloud function as `onNewImage`.
+- Launch the cloud function from the Pub/Sub console.
+- Configure environment variables through the GUI console, including `PROJECT`, `ZONE`, `CLUSTER`, and `DEPLOYMENT`.
+- Copy the code and `requirements.txt` files for the cloud function from the `cloud-function-trigger` folder.
+- Set the Entrypoint for the cloud function as `onNewImage`.
 - Deploy the function.
 
-After successful deployment, make a commit to the source repository and the following will happen in sequence:
+After successful deployment, commit changes to the source repository, triggering the following sequence:
 
-- Cloud Build will push a message to Pub/Sub upon successful build.
-- Pub/Sub will trigger the cloud function.
-- Cloud function will deploy the new image on Kubernetes.
-- To test the deployment, check the logs on Kubernetes cluster using the following command:
+- Cloud Build sends a message to Pub/Sub upon successful build.
+- Pub/Sub triggers the cloud function.
+- The cloud function deploys the new image on Kubernetes.
+- To test the deployment, check the logs on the Kubernetes cluster using the following commands:
   - `kubectl get pods`
   - `kubectl logs <pod name>`
 
-The deployment will reflect in the logs as well as in the endpoints.
+The deployment status is reflected in the logs and endpoints.
 
 ---
 
-## Folder Structure Info
+## Folder Structure
 
-1. **Input** - Data-chillers.csv
-2. **Kubernetes files** - this folder contains all the required files to trigger Kubernetes
-3. **MLPipeline** - this folder contains all the functions put into different Python files
-4. **Notebook** - the time series ARIMA notebook
-5. **Output** - the model that is saved in the (.pkl format)
-6. `__init__.py` - required empty file
-7. `Dockerfile` - The Docker image
-8. **Engine** - File where the MLPipeline files are called
-9. `Main.py` - file to host Flask API
-10. `Readme` - explains the entire approach /steps
-11. `Requirements.txt` - all the required libraries
-12. `Uwsgi.ini` - uWSGI configuration file
+1. **Input**: Contains the "Data-chillers.csv" dataset.
+2. **Kubernetes files**: Includes files to trigger Kubernetes.
+3. **MLPipeline**: Contains functions in different Python files.
+4. **Notebook**: The time series ARIMA notebook.
+5. **Output**: Stores the model in (.pkl) format.
+6. `__init__.py`: An empty required file.
+7. `Dockerfile`: The Docker image configuration.
+8. **Engine**: Where the MLPipeline files are called.
+9. `Main.py`: Hosts the Flask API.
+10. `Readme`: Provides an explanation of the entire approach and steps.
+11. `Requirements.txt`: Lists all required libraries.
+12. `Uwsgi.ini`: uWSGI configuration file.
 
 ---
 
 ## Key Concepts Explored
 
-1. Time series
-2. White Noise detection
-3. Random Walk detection
-4. Stationarity test
-5. Seasonality plot
-6. Holt Winter Exponential Smoothing model
-7. ARIMA model
-8. ACF plots
-9. Log-likelihood and AIC test
-10. ARIMAX model
-11. SARIMAX model
-12. MLOps architecture in Google Cloud Platform (GCP)
-13. Understanding of Flask and uWSGI model files
-14. Understanding and building of Docker images
-15. Understanding of Kubernetes architecture
-16. Various components on GCP
-17. Learn how to create a cloud repository in GCP
-18. Learn how to clone the git repository with the source repository
-19. Learn how to commit changes in the source repository
-20. Cloud build component and create a trigger
-21. Understand the Pub/Sub component
-22. Cloud Shell editor
-23. Flask deployment
-24. Understanding the cloud function
-25. Kubernetes deployment
-
+- Time series analysis
+- Detection of white noise and random walk
+- Stationarity tests
+- Seasonal decomposition
+- Holt Winter Exponential Smoothing
+- ARIMA modeling
+- ACF plots and statistical tests
+- ARIMAX modeling
+- SARIMAX modeling
+- MLOps architecture on Google Cloud Platform
+- Flask and uWSGI for web applications
+- Docker image creation
+- Kubernetes orchestration
+- Google Cloud Platform components
+- Cloud Build triggers
+- Pub/Sub messaging
+- Cloud Functions for automation
 
 ---
+
 
