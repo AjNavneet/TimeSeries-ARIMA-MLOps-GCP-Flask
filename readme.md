@@ -1,4 +1,4 @@
-# Time Series ARIMA Model with MLOps on Google Cloud Platform (GCP) using uWSGI Flask
+# ARIMA Time Series Model with MLOps on GCP using uWSGI Flask
 
 ## Business Objective
 
@@ -102,7 +102,7 @@ The deployment status is reflected in the logs and endpoints.
 
 ---
 
-## Folder Structure
+## Cpde Structure
 
 1. **Input**: Contains the "Data-chillers.csv" dataset.
 2. **Kubernetes files**: Includes files to trigger Kubernetes.
@@ -116,28 +116,6 @@ The deployment status is reflected in the logs and endpoints.
 10. `Readme`: Provides an explanation of the entire approach and steps.
 11. `Requirements.txt`: Lists all required libraries.
 12. `Uwsgi.ini`: uWSGI configuration file.
-
----
-
-## Key Concepts Explored
-
-- Time series analysis
-- Detection of white noise and random walk
-- Stationarity tests
-- Seasonal decomposition
-- Holt Winter Exponential Smoothing
-- ARIMA modeling
-- ACF plots and statistical tests
-- ARIMAX modeling
-- SARIMAX modeling
-- MLOps architecture on Google Cloud Platform
-- Flask and uWSGI for web applications
-- Docker image creation
-- Kubernetes orchestration
-- Google Cloud Platform components
-- Cloud Build triggers
-- Pub/Sub messaging
-- Cloud Functions for automation
 
 ---
 
